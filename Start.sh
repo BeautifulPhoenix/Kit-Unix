@@ -11,12 +11,22 @@ menu_option_one(){
     echo "2. list apps"
 
 
-menu_option_one(){
-    sudo apt update && sudo apt upgrade
+    menu_option_one(){
+        sudo apt update && sudo apt upgrade
 
 
 
-}
+    }
+
+    menu_option_two(){
+        echo "APPS..."
+        echo "Discord"
+        echo "Google Chrome"
+        echo "Visual Studio "
+        echo " snap"
+        echo " flatpak"
+        
+    }
 
 
 
