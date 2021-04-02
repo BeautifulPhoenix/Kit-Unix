@@ -17,29 +17,32 @@ until [ "$selection" = "0" ]; do
   case $selection in
     1 )  
 
-    $Ubuntu= 0;
     clear
     echo "You Selected Ubuntu Based!"
     echo "1. Update System"
     echo "2. list apps"
     echo -n "  Enter selection: "
     read Ubuntu
+    echo ""
+    if [$Ubuntu = 1]
+
+      then 
+             echo "Updating system...."
+             sudo apt update && sudo apt upgrad
+
+      read Ubuntu
+    
+  fi
+  date
+
+
+
+
     press_enter ;;
 
-        case $Ubuntu in
 
-        1)  echo "Updating system...."
-             sudo apt update && sudo apt upgrad
-    
-        2) 
-            echo "List of apps: "
-            echo "APPS..."
-            echo "Discord"
-            echo "Google Chrome"
-            echo "Visual Studio "
-            echo " snap"
-            echo " flatpak"
 
+      
 
 
 
@@ -55,6 +58,10 @@ done
 
 menu_option_one(){
 
+          echo "Updating system...."
+             sudo apt update && sudo apt upgrad
+    
+         
 
 
     menu_option_one(){
@@ -66,7 +73,13 @@ menu_option_one(){
 
     menu_option_two(){
 
-
+            echo "List of apps: "
+            echo "APPS..."
+            echo "Discord"
+            echo "Google Chrome"
+            echo "Visual Studio "
+            echo " snap"
+            echo " flatpak"
     }
 
 
