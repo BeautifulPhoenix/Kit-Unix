@@ -1,91 +1,102 @@
-#! /bin/bash
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+import os
+import os.path
+import subprocess
 
 
+ 
+def menu():
+    print('******MENU******')
+    print('1. List Apps')
+    print('2.- Update System')
+    print('3.- ')
+    print('4.- ')
+    print('5.- ')
+    print('6.- Salir')
+    print()
+ 
+def menu2():
+    print('a.-')
+    print('b.-')
+    print('c.-')
+ 
+def menu3():
+    print(" ")
+    print('1.-')
+    print('2.- ')
+ 
+opcionmenu = 0
+menu()
+x=0
+while opcionmenu != 6:
+    opcionmenu = int(input("Inserta un numero para elegir una opcion: "))
+    if opcionmenu == 1:
+        print('''
+        - Disocrd
+        - Visual Studio 
+        - qBitorrent
+        - Thunderbird
+        - Snapd
+        - Flatpak
+        - GIMP
+        - OpenShot
+        - LibreOffice
+        - Kazam
+        - VLC
+        - Kodi
 
-
-until [ "$selection" = "0" ]; do
-  clear
-  echo ""
-  echo "Select your Linux Distro:"
-  echo " 1 -> Ubuntu Based"
-  echo " 2 -> Arch "
-  echo " 0 ->  Exit"
-  echo ""
-  echo -n "  Enter selection: "
-  read selection
-  echo ""
-  case $selection in
-    1 )  
-
-    clear
-    echo "You Selected Ubuntu Based!"
-    echo "1. Update System"
-    echo "2. list apps"
-    echo -n "  Enter selection: "
-    read Ubuntu
-    echo ""
-    if [$Ubuntu = 1]
-
-      then 
-             echo "Updating system...."
-             sudo apt update && sudo apt upgrad
-
-      read Ubuntu
-    
-  fi
-  date
-
-
-
-
-    press_enter ;;
-
-
-
-      
-
-
-
-
-
-
-    2 ) clear ; menu_option_two ; press_enter ;;
-    0 ) clear ; exit ;;
-    * ) clear ; incorrect_selection ; press_enter ;;
-  esac
-done
-
-
-menu_option_one(){
-
-          echo "Updating system...."
-             sudo apt update && sudo apt upgrad
-    
          
+        ''')
+        
+        menu()
+ 
+ 
+    elif opcionmenu == 2:
+        
+        menu()
+ 
+    elif opcionmenu == 3:
+        
+        menu2()
+        
+        
+            
+        menu()
+    elif opcionmenu == 4:
+        menu3()
+        opcionmenu3 = input("Inserta un numero para elegir una opcion: ")
+        if opcionmenu3=="1":
+            
+
+            menu()
+        menu()
+ 
+    elif opcionmenu == 5:
+ 
+        
+        menu()
+ 
+ 
+    elif opcionmenu != 6:
+        menu()
 
 
-    menu_option_one(){
-        sudo apt update && sudo apt upgrade
 
 
 
-    }
-
-    menu_option_two(){
-
-            echo "List of apps: "
-            echo "APPS..."
-            echo "Discord"
-            echo "Google Chrome"
-            echo "Visual Studio "
-            echo " snap"
-            echo " flatpak"
-    }
 
 
 
-}
 
-menu_option_two(){
-    echo "You Selected Arch Based!"
-}
+
+
+
+
+
+
+
+
+

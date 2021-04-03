@@ -1,0 +1,3 @@
+sudo add-apt-repository ppa:kazam-team/unstable-series
+sudo apt update
+sudo apt install kazam python3-cairo python3-xlib
