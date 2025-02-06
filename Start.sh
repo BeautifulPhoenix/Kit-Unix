@@ -98,7 +98,7 @@ class SystemManager:
                 continue
 
 def execute_commands(commands, package_manager):
-    # Modify commands based on package manager
+
     if package_manager == 'pacman':
         cmd_map = {
             'apt update': 'pacman -Sy',
@@ -152,9 +152,7 @@ def main():
     system.select_language()
     system.select_distribution()
     
-    # Continue with your existing menu logic, but use system.package_manager
-    # for package management commands and LANGUAGES[system.language] for texts
-
+    
 if __name__ == "__main__":
     main()
 
