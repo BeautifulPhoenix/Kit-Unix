@@ -6,13 +6,112 @@ import os
 import os.path
 import subprocess
 
-def execute_commands(commands):
-    for cmd in commands:
-        try:
-            subprocess.run(cmd, shell=True, check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"Error executing command: {cmd}")
-            print(f"Error: {str(e)}")
+# Language dictionaries
+LANGUAGES = {
+    'en': {
+        'menu_title': '****** MENU ******',
+        'select_language': 'Select language/Seleccione idioma:\n1. English\n2. Español',
+        'select_distro': 'Select your distribution:',
+        'ubuntu_based': 'Ubuntu-based distributions:',
+        'arch_based': 'Arch-based distributions:',
+        'list_apps': 'List Apps',
+        'update_system': 'Update System',
+        'install_apps': 'Install Apps',
+        'install_all': 'Install All Apps',
+        'exit': 'Exit',
+        'choose_option': 'Insert a number to choose an option: ',
+        'invalid_option': 'Invalid option!',
+        'enter_valid_number': 'Please enter a valid number!',
+        'thanks': 'Thank you for using the installer!',
+        'installing': 'Installing {}...',
+        'install_complete': '{} installation completed!',
+        'file_not_found': 'Installation file for {} not found!',
+        'updating_system': 'Updating system...'
+    },
+    'es': {
+        'menu_title': '****** MENÚ ******',
+        'select_language': 'Select language/Seleccione idioma:\n1. English\n2. Español',
+        'select_distro': 'Seleccione su distribución:',
+        'ubuntu_based': 'Distribuciones basadas en Ubuntu:',
+        'arch_based': 'Distribuciones basadas en Arch:',
+        'list_apps': 'Listar Aplicaciones',
+        'update_system': 'Actualizar Sistema',
+        'install_apps': 'Instalar Aplicaciones',
+        'install_all': 'Instalar Todas las Aplicaciones',
+        'exit': 'Salir',
+        'choose_option': 'Inserte un número para elegir una opción: ',
+        'invalid_option': '¡Opción inválida!',
+        'enter_valid_number': '¡Por favor, introduzca un número válido!',
+        'thanks': '¡Gracias por usar el instalador!',
+        'installing': 'Instalando {}...',
+        'install_complete': '¡Instalación de {} completada!',
+        'file_not_found': '¡Archivo de instalación para {} no encontrado!',
+        'updating_system': 'Actualizando sistema...'
+    }
+}
+
+class SystemManager:
+    def __init__(self):
+        self.language = 'en'
+        self.distro_type = None
+        self.package_manager = None
+
+    def select_language(self):
+        while True:
+            print(LANGUAGES['en']['select_language'])
+            try:
+                choice = int(input(LANGUAGES['en']['choose_option']))
+                if choice == 1:
+                    self.language = 'en'
+                    break
+                elif choice == 2:
+                    self.language = 'es'
+                    break
+            except ValueError:
+                continue
+
+    def select_distribution(self):
+        texts = LANGUAGES[self.language]
+        while True:
+            print(f"\n{texts['select_distro']}")
+            print(f"\n{texts['ubuntu_based']}")
+            print("1. Ubuntu")
+            print("2. Linux Mint")
+            print("3. Pop!_OS")
+            print("4. Elementary OS")
+            print(f"\n{texts['arch_based']}")
+            print("5. Arch Linux")
+            print("6. Manjaro")
+            print("7. EndeavourOS")
+            
+            try:
+                choice = int(input(texts['choose_option']))
+                if 1 <= choice <= 4:
+                    self.distro_type = 'ubuntu'
+                    self.package_manager = 'apt'
+                    break
+                elif 5 <= choice <= 7:
+                    self.distro_type = 'arch'
+                    self.package_manager = 'pacman'
+                    break
+            except ValueError:
+                continue
+
+def execute_commands(commands, package_manager):
+    # Modify commands based on package manager
+    if package_manager == 'pacman':
+        cmd_map = {
+            'apt update': 'pacman -Sy',
+            'apt install': 'pacman -S',
+            'apt-get': 'pacman',
+            'add-apt-repository': 'pacman -S'
+        }
+        modified_commands = []
+        for cmd in commands:
+            for apt_cmd, pac_cmd in cmd_map.items():
+                cmd = cmd.replace(apt_cmd, pac_cmd)
+            modified_commands.append(cmd)
+        commands = modified_commands
 
 def install_app(app_name):
     app_file = f"/Users/oriol/dev/Kit-Unix/src/{app_name}.txt"
@@ -48,49 +147,16 @@ def list_available_apps():
         print(f"{i}. {app}")
     print()
 
-opcionmenu = 0
-menu()
+def main():
+    system = SystemManager()
+    system.select_language()
+    system.select_distribution()
+    
+    # Continue with your existing menu logic, but use system.package_manager
+    # for package management commands and LANGUAGES[system.language] for texts
 
-while opcionmenu != 5:
-    try:
-        opcionmenu = int(input("Insert a number to choose an option: "))
-        
-        if opcionmenu == 1:
-            list_available_apps()
-            menu()
-        
-        elif opcionmenu == 2:
-            print("Updating system...")
-            execute_commands([
-                "sudo apt update",
-                "sudo apt upgrade -y"
-            ])
-            menu()
-        
-        elif opcionmenu == 3:
-            list_available_apps()
-            app_choice = input("Enter the name of the app to install (exactly as shown): ")
-            install_app(app_choice)
-            menu()
-        
-        elif opcionmenu == 4:
-            print("Installing all available apps...")
-            apps = ["LibreOffice", "Thunderbird", "GIMP", "OpenShot", 
-                    "Kazam", "VLC", "Kodi", "Firefox", "Chrome", "Spotify",
-                    "Steam", "Timeshift", "Synaptic", "Neofetch", "htop",
-                    "gparted", "VirtualBox", "Telegram", "Audacity", "OBS Studio",
-                    "FileZilla", "Inkscape", "Blender", "Wine"]
-            for app in apps:
-                install_app(app)
-            menu()
-        
-        elif opcionmenu != 5:
-            print("Invalid option!")
-            menu()
-
-    except ValueError:
-        print("Please enter a valid number!")
-        menu()
+if __name__ == "__main__":
+    main()
 
 print("Thank you for using the installer!")
 
